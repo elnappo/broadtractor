@@ -238,18 +238,25 @@ def init_dict():
     HOST_INFO["packet_counter"] = 0
 
 
-def main(interface, bpf="multicast or broadcast"):
+def main(args, bpf="multicast or broadcast"):
     global HOST_INFO
     init_dict()
 
-    sniff(prn=pkt_callback, iface=interface, filter=bpf)
+    if args.interface:
+        print("Hit Ctrl-C to stop")
+        sniff(prn=pkt_callback, iface=args.interface, filter=bpf)
+    elif args.pcap:
+        sniff(prn=pkt_callback, offline=args.pcap, filter=bpf)
+    else:
+        sys.exit("Please provide either interface or pcap file.")
 
 
 if __name__ == "__main__":
     FORMAT = "%(levelname)s: %(message)s"
 
     parser = argparse.ArgumentParser(description="Sniff broadcast traffic and print host info's")
-    parser.add_argument("interface", type=str, help="Interface to sniff")
+    parser.add_argument("-i", "--interface", type=str, help="Interface to sniff")
+    parser.add_argument("-p", "--pcap", type=str, help="PCAP file to read")
     parser.add_argument("-v", "--verbose", action="store_true", help="Verbose output")
 
     args = parser.parse_args()
@@ -258,7 +265,6 @@ if __name__ == "__main__":
     else:
         logging.basicConfig(format=FORMAT, level=logging.WARNING)
 
-    print("Hit Ctrl-C to stop")
-    main(args.interface)
+    main(args)
     print("\nFrom %d multicast or broadcast packages the following information's were extract:" % HOST_INFO["packet_counter"])
     pprint(HOST_INFO)
