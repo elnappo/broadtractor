@@ -9,9 +9,12 @@ information's from broadcast data.
 > -- <cite>UCSniff Disclaimer</cite>
 
 ## Get it running
-    pip3 install dnslib netaddr scapy-python3
-    python3 broadtractor.py -v eth0
- 
+    # on macOS only, install libdnet
+    brew install libdnet
+
+    pip3 install dnslib netaddr kamene
+    python3 broadtractor.py -v -i eth0
+
 ## Sample verbose output
     INFO: Found Canon BJNP, IP: 192.168.136.124 MAC: ad:52:59:f2:8b:5a
     INFO: Found Dropbox LanSync, IP: 192.168.124.152 MAC: 8c:c7:32:fa:bf:33

@@ -3,10 +3,9 @@ import json
 from pprint import pprint
 import logging
 import argparse
-import json
 
 import dnslib
-from scapy.all import *
+from kamene.all import *
 import netaddr
 
 
@@ -254,7 +253,7 @@ def main(args, bpf="multicast or broadcast"):
 if __name__ == "__main__":
     FORMAT = "%(levelname)s: %(message)s"
 
-    parser = argparse.ArgumentParser(description="Sniff broadcast traffic and print host info's")
+    parser = argparse.ArgumentParser(description="Sniff broadcast traffic and print host info")
     parser.add_argument("-i", "--interface", type=str, help="Interface to sniff")
     parser.add_argument("-p", "--pcap", type=str, help="PCAP file to read")
     parser.add_argument("-v", "--verbose", action="store_true", help="Verbose output")
